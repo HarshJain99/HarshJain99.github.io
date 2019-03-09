@@ -191,11 +191,19 @@ img::-moz-selection {
 header.masthead {
   text-align: center;
   color: white;
+/*
   background-image: url("../img/header-bg.jpeg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center center;
   background-size: cover;
+*/
+  background-image: url("../img/background.jpg");
+  height: 100vh;
+  min-height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat 
 }
 
 header.masthead .intro-text {
