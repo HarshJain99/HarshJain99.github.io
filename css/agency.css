@@ -195,11 +195,13 @@ header.masthead {
   text-align: center;
   color: white;
   background-image: url("../img/background.jpg");
-  height: 100vh;
+  height: 120vh;
   min-height: 500px;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat 
+  background-attachment: fixed;
+  background-repeat: no-repeat;  
+  clip-path: polygon(0% 0%,100% 0% ,100% calc(100% - 10vw),55% calc(100% - 10vw),50% calc(100% - 6vw),45% calc(100% - 10vw), 0% calc(100% - 10vw));
 }
 
 header.masthead .intro-text {
@@ -283,6 +285,11 @@ header.masthead .intro-text .intro-heading {
   opacity: 1;
 }
 */
+
+#portfolio{
+  margin-top: -10vw;
+}
+
 #portfolio .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content {
   font-size: 20px;
   position: absolute;
@@ -654,7 +661,7 @@ section#contact {
   background-image: url("../img/map-image.png");
   background-repeat: no-repeat;
   background-position: center;
-  height:80vh;
+  min-height:80vh;
   padding-top:150px;
 }
 
@@ -715,6 +722,11 @@ section#contact button{
 
 section#contact i{
   font-size: 150%;
+}
+
+section#contact .email_link{
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 footer {
