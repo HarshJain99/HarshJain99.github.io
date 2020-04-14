@@ -201,7 +201,8 @@ function joinChannelAsScreenShare(name) {
         console.log("[ERROR] : publish screen stream error: " + err);
       });
     }, function (err) {
-      console.log("[ERROR] : getScreen failed", err);
+      alert("[ERROR] : getScreen failed", err);
+      // console.log("[ERROR] : getScreen failed", err);
       localStreams.screen.id = ""; // reset screen stream id
       localStreams.screen.stream = {}; // reset the screen stream
       screenShareActive = false; // resest screenShare
