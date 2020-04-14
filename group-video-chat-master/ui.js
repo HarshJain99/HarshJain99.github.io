@@ -19,6 +19,9 @@ function myFunJoinChannel(){
   $('#usernameLocalVideo').html(name + ' (you)')
   initClientAndJoinChannel(agoraAppId, channelName, name);
   $("#modalForm").fadeOut();
+  setTimeout(function(){
+    setVideoSize();
+  }, 1000);
 }
 
 // UI buttons
@@ -50,6 +53,7 @@ function enableUiControls(localStream) {
     } else {
       initScreenShare(agoraAppId, name); 
     }
+    setVideoSize();
   });
 
 
@@ -120,3 +124,12 @@ function toggleVideo(localStream) {
   }
 }
 
+
+function setVideoSize(){
+  setTimeout(function(){
+    $("video").css("height","auto").css("max-height","auto").css("width","25vw");
+    console.log("video set");
+    $("#full-screen-video div video").css("height","auto").css("max-height","auto").css("width","auto").css("max-width","auto");
+    console.log("video set");  
+  }, 500);
+}

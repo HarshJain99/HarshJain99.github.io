@@ -6,7 +6,7 @@
 var cameraVideoProfile = '480p_4'; // 640 × 480 @ 30fps  & 750kbs
 var screenVideoProfile = '480p_2'; // 640 × 480 @ 30fps
 
-var cameraVideoProfile = '720p_3'; // 640 × 480 @ 30fps  & 750kbs
+var cameraVideoProfile = '1080p_2'; // 1920 × 1080 @ 30fps  & 750kbs
 var screenVideoProfile = '720p_2'; // 640 × 480 @ 30fps
 
 // create client instances for camera (client) and screen share (screenClient)
@@ -62,6 +62,7 @@ client.on('stream-added', function (evt) {
       console.log("[ERROR] : subscribe stream failed", err);
     });
   }
+  setVideoSize();
 });
 
 client.on('stream-subscribed', function (evt) {
@@ -75,6 +76,7 @@ client.on('stream-subscribed', function (evt) {
   } else {
     addRemoteStreamMiniView(remoteStream);
   }
+  setVideoSize();
 });
 
 // remove the remote-container when a user leaves the channel
@@ -96,6 +98,7 @@ client.on("peer-leave", function(evt) {
       $(remoteContainerID).empty().remove(); // 
     }
   }
+  setVideoSize();
 });
 
 // show mute icon whenever a remote has muted their mic
@@ -155,6 +158,8 @@ function createCameraStream(uid) {
   
     enableUiControls(localStream); // move after testing
     localStreams.camera.stream = localStream; // keep track of the camera stream for later
+
+    setVideoSize();
   }, function (err) {
     console.log("[ERROR] : getUserMedia failed", err);
   });
@@ -181,7 +186,7 @@ function joinChannelAsScreenShare(name) {
     // Create the stream for screen sharing.
     var screenStream = AgoraRTC.createStream({
       streamID: uid,
-      audio: false, // Set the audio attribute as false to avoid any echo during the call.
+      audio: true, // Set the audio attribute as false to avoid any echo during the call.
       video: false,
       screen: true, // screen stream
       // extensionId: 'minllpmhdgpndnkomcoccfekfegnlikg', // Google Chrome:
@@ -213,7 +218,7 @@ function joinChannelAsScreenShare(name) {
     // TODO: add logic to swap main video feed back from container
     remoteStreams[mainStreamId].stop(); // stop the main video stream playback
     addRemoteStreamMiniView(remoteStreams[mainStreamId]); // send the main video stream to a container
-    // localStreams.screen.stream.play('full-screen-video'); // play the screen share as full-screen-video (vortext effect?)
+    localStreams.screen.stream.play('full-screen-video'); // play the screen share as full-screen-video (vortext effect?)
     $("#video-btn").prop("disabled",true); // disable the video button (as cameara video stream is disabled)
   });
   
@@ -273,6 +278,7 @@ function addRemoteStreamMiniView(remoteStream){
     remoteStreams[streamId].stop() // stop the container's video stream playback
     remoteStreams[streamId].play('full-screen-video'); // play the remote stream as the full screen video
     mainStreamId = streamId; // set the container stream id as the new main stream id
+    setVideoSize();
   });
 }
 
@@ -306,4 +312,13 @@ function leaveChannel() {
 // use tokens for added security
 function generateToken() {
   return null; // TODO: add a token generation
+}
+
+function setVideoSize(){
+  setTimeout(function(){
+    $("video").css("height","auto").css("max-height","auto").css("width","25vw");
+    console.log("video set");
+    $("#full-screen-video div video").css("height","auto").css("max-height","auto").css("width","auto").css("max-width","auto");
+    console.log("video set");  
+  }, 500);
 }
