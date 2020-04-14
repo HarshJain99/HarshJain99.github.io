@@ -1,0 +1,83 @@
+<html lang="en">
+	<head>
+		<title>Agora Group Video Chat Demo</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdn.agora.io/sdk/web/AgoraRTCSDK-2.6.0.js"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+		<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script> -->
+		<script src="agora-interface.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+
+		<script src="ui.js"></script>
+
+	</head>
+	<body>
+		<div class="main">
+			<div id="main-container">
+				<div id="buttons-container">
+					<div class="buttonHolder">
+						<button id="mic-btn" type="button" class="button">
+							<i id="mic-icon" class="fas fa-microphone"></i>
+						</button>
+					</div>
+					<div class="buttonHolder">
+						<button id="video-btn"  type="button" class="button">
+							<i id="video-icon" class="fas fa-video"></i>
+						</button>
+					</div>
+					<div class="buttonHolder">
+						<button id="exit-btn"  type="button" class="button button-text-red">
+							<i id="exit-icon" class="fas fa-phone-slash"></i>
+						</button>
+					</div>
+				</div>
+				<div id="full-screen-video"></div>
+				<div id="right-video-bar">
+					<div id="remote-stream-main-container">
+						<div id="remote-streams">
+							<!-- insert remote streams dynamically -->
+						</div>
+					</div>
+					<div id="local-stream-container">
+						<div id="usernameLocalVideo">
+						</div>
+						<div id="mute-overlay">
+							<i id="mic-icon" class="fas fa-microphone-slash"></i>
+						</div>
+						<div id="no-local-video">
+							<i id="user-icon" class="fas fa-user"></i>
+						</div>
+						<div id="local-video"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal -->
+		<div class="modal" id="modalForm">
+			<div id="modal-header">
+				<div id="modal-title">Join Channel</div>
+			</div>
+			<div id="modal-body">
+				<div>		
+					<label for="form-channel">Name</label>
+					<input type="text" id="form-channel-name" class="form-control" placeholder="Enter your name">
+				</div>
+				<button id="join-channel" class="btn btn-default" onclick="myFunJoinChannel()">Join Channel</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$("#mic-btn").prop("disabled", true);
+		$("#video-btn").prop("disabled", true);
+		$("#screen-share-btn").prop("disabled", true);
+		$("#exit-btn").prop("disabled", true);
+
+		// $(document).ready(function(){
+		// 	$("#modalForm").fadeIn();
+		// });
+	</script>
+</html>
