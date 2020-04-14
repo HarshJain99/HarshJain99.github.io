@@ -2,6 +2,8 @@ var agoraAppId = "0cd6243a4cdd42e28102463659764258";
 var channelName = "1";
 
 
+var name;
+
 // join channel modal
 // $( "#join-channel" ).click(function( event ) {
 //   initClientAndJoinChannel(agoraAppId, channelName);
@@ -9,7 +11,7 @@ var channelName = "1";
 // });
 
 function myFunJoinChannel(){
-  var name = $('#form-channel-name').val().replace(" ", "_");
+  name = $('#form-channel-name').val().replace(" ", "_");
   if(name== undefined || name.length == 0 || name == ''){
     alert("Name cannot be left empty.. ");
     return;
@@ -40,6 +42,17 @@ function enableUiControls(localStream) {
     leaveChannel(); 
   });
 
+  $("#screen-share-btn").click(function(){
+    toggleScreenShareBtn(); // set screen share button icon
+    $("#screen-share-btn").prop("disabled",true); // disable the button on click
+    if(screenShareActive){
+      stopScreenShare();
+    } else {
+      initScreenShare(agoraAppId, name); 
+    }
+  });
+
+
   // keyboard listeners 
   $(document).keypress(function(e) {
     switch (e.key) {
@@ -67,6 +80,12 @@ function enableUiControls(localStream) {
 
 function toggleBtn(btn){
   btn.toggleClass('btn-dark').toggleClass('btn-danger');
+}
+
+function toggleScreenShareBtn(){
+  console.log("Screen Share Clicked");
+  $('#screen-share-btn').toggleClass('btn-danger');
+  $('#screen-share-icon').toggleClass('fa-share-square').toggleClass('fa-times-circle');
 }
 
 function toggleVisibility(elementID, visible) {
@@ -100,3 +119,4 @@ function toggleVideo(localStream) {
     toggleVisibility("#no-local-video", true); // show the user icon when video is disabled
   }
 }
+

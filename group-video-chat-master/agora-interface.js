@@ -7,7 +7,7 @@ var cameraVideoProfile = '480p_4'; // 640 × 480 @ 30fps  & 750kbs
 var screenVideoProfile = '480p_2'; // 640 × 480 @ 30fps
 
 var cameraVideoProfile = '720p_3'; // 640 × 480 @ 30fps  & 750kbs
-var screenVideoProfile = '720p_3'; // 640 × 480 @ 30fps
+var screenVideoProfile = '720p_2'; // 640 × 480 @ 30fps
 
 // create client instances for camera (client) and screen share (screenClient)
 var client = AgoraRTC.createClient({
@@ -161,10 +161,10 @@ function createCameraStream(uid) {
 }
 
 // SCREEN SHARING
-function initScreenShare(agoraAppId) {
+function initScreenShare(agoraAppId, name) {
   screenClient.init(agoraAppId, function () {
     console.log("AgoraRTC screenClient initialized");
-    joinChannelAsScreenShare();
+    joinChannelAsScreenShare(name);
     screenShareActive = true;
     // TODO: add logic to swap button
   }, function (err) {
@@ -172,9 +172,9 @@ function initScreenShare(agoraAppId) {
   });  
 }
 
-function joinChannelAsScreenShare() {
+function joinChannelAsScreenShare(name) {
   var token = generateToken();
-  var userID = null; // set to null to auto generate uid on successfull connection
+  var userID = name + "_screen"; // set to null to auto generate uid on successfull connection
   screenClient.join(token, channelName, userID, function(uid) { 
     localStreams.screen.id = uid;  // keep track of the uid of the screen stream.
     
@@ -185,7 +185,7 @@ function joinChannelAsScreenShare() {
       video: false,
       screen: true, // screen stream
       extensionId: 'minllpmhdgpndnkomcoccfekfegnlikg', // Google Chrome:
-      mediaSource:  'screen', // Firefox: 'screen', 'application', 'window' (select one)
+//      mediaSource:  'screen', // Firefox: 'screen', 'application', 'window' (select one)
     });
     screenStream.setScreenProfile(screenVideoProfile); // set the profile of the screen
     screenStream.init(function(){
@@ -297,7 +297,7 @@ function leaveChannel() {
     toggleVisibility("#mute-overlay", false); 
     toggleVisibility("#no-local-video", false);
     // show the modal overlay to join
-    $("#modalForm").modal("show"); 
+    // $("#modalForm").modal("show"); 
   }, function(err) {
     console.log("client leave failed ", err); //error handling
   });
