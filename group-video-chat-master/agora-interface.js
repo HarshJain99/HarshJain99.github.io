@@ -218,7 +218,7 @@ function joinChannelAsScreenShare(name) {
     // TODO: add logic to swap main video feed back from container
     remoteStreams[mainStreamId].stop(); // stop the main video stream playback
     addRemoteStreamMiniView(remoteStreams[mainStreamId]); // send the main video stream to a container
-    localStreams.screen.stream.play('full-screen-video'); // play the screen share as full-screen-video (vortext effect?)
+    // localStreams.screen.stream.play('full-screen-video'); // play the screen share as full-screen-video (vortext effect?)
     $("#video-btn").prop("disabled",true); // disable the video button (as cameara video stream is disabled)
   });
   
