@@ -184,8 +184,8 @@ function joinChannelAsScreenShare(name) {
       audio: false, // Set the audio attribute as false to avoid any echo during the call.
       video: false,
       screen: true, // screen stream
-      extensionId: 'minllpmhdgpndnkomcoccfekfegnlikg', // Google Chrome:
-//      mediaSource:  'screen', // Firefox: 'screen', 'application', 'window' (select one)
+      // extensionId: 'minllpmhdgpndnkomcoccfekfegnlikg', // Google Chrome:
+      // mediaSource:  'screen', // Firefox: 'screen', 'application', 'window' (select one)
     });
     screenStream.setScreenProfile(screenVideoProfile); // set the profile of the screen
     screenStream.init(function(){
