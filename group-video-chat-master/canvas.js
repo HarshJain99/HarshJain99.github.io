@@ -5,6 +5,11 @@ var isDown = false;
 var lineWidth = 1;
 var lineColor = "black";
 
+var maxImages = 5;
+var canvasImages = [null, null, null, null, null];
+var latestImage = -1;
+
+
 window.onload = function() {
 
     // Fill Window Width and Height
@@ -83,6 +88,7 @@ function defaultDrawingBehavior(){
         if(allowdrawFree){
             isDown = false;
             ctx.closePath();
+            appendNewCanvasImage();
         }
     });
 }
@@ -224,8 +230,41 @@ function drawCircle(){
 function clearWhiteBoard(){
     $('.shapeInCanvas').remove();
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+    canvasImages = [null, null, null, null, null];
+    latestImage = -1;
 }
 
 function onColorChange(){
     lineColor = $('#lineColor').val();
+}
+
+function appendNewCanvasImage(){
+    latestImage++;
+    canvasImages[latestImage%maxImages] = document.getElementById('whiteBoard').toDataURL();
+    console.log(latestImage);
+}
+
+function undoWhiteBoard(){
+    console.log(latestImage);
+    if(latestImage == -1 || canvasImages[latestImage%maxImages] == null){
+        alert("No more undo available" + latestImage + latestImage%maxImages + canvasImages[latestImage%maxImages]);
+        return;
+    }
+    
+    canvasImages[latestImage%maxImages] = null;
+    latestImage = latestImage-1;
+    if(latestImage == -1){
+        latestImage = maxImages-1;
+    }
+
+
+    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+    var image = new Image();
+    image.src = canvasImages[latestImage%maxImages];
+
+    image.onload = function () { 
+        ctx.drawImage(image, 0, 0);
+    }
+    console.log(latestImage);
 }
