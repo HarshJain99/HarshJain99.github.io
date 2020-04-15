@@ -230,3 +230,57 @@ body{
   color: rgba(0, 0, 0, 0.8);
   margin-left: 1%;
 }
+
+#toggleWhiteBoard{
+  position: absolute;
+  bottom: 10vw;
+  left: 5vw;
+  padding: 2vw;
+  box-sizing: border-box;
+  min-width: 18vmax;
+  cursor: pointer;
+  z-index: 3;
+}
+
+#whiteBoardContainer{
+  display: none;
+  background-color: white;
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  cursor: crosshair;
+}
+
+#whiteBoardControls{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6vh;
+  width: 100vw;
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#whiteBoardControls button{
+  padding: 1vw 2vw;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+#whiteBoardContainer .shapeInCanvas{
+  background-color: transparent;
+  border: 2px solid black;
+  position: absolute; 
+  pointer-events: none;
+}
+
+.drawingRectangle{
+  border:  none;
+  background-color: white;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
+  outline: none;
+}

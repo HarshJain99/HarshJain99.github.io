@@ -74,6 +74,19 @@
 				<button id="join-channel" class="btn btn-default" onclick="myFunJoinChannel()">Join Channel</button>
 			</div>
 		</div>
+
+		<div id="whiteBoardContainer">
+			<div id="whiteBoardControls">
+				<button id="drawRectangle" onclick="drawRectangle()">Rectangle</button>
+				<button id="clearWhiteBoard" onclick="clearWhiteBoard()">Clear</button>
+				<button id="closeWhiteBoard" onclick="toggleWhiteBoard()">Close Board</button>
+			</div>
+			<canvas id="whiteBoard">
+				Sorry, your browser does not support HTML5 canvas technology.
+			</canvas>
+		</div>
+		<button id="toggleWhiteBoard" onclick="toggleWhiteBoard()">WhiteBoard</button>
+
 	</body>
 	<script type="text/javascript">
 		$("#mic-btn").prop("disabled", true);
@@ -85,4 +98,6 @@
 		// 	$("#modalForm").fadeIn();
 		// });
 	</script>
+	<script src="canvas.js"></script>
+
 </html>

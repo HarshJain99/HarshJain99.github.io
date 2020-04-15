@@ -1,7 +1,5 @@
 var agoraAppId = "0cd6243a4cdd42e28102463659764258";
 var channelName = "1";
-
-
 var name;
 
 // join channel modal
@@ -72,6 +70,10 @@ function enableUiControls(localStream) {
         console.log("so sad to see you quit the channel");
         leaveChannel(); 
         break;   
+      case "w":
+        console.log("quick toggle whiteboard");
+        toggleWhiteBoard(); 
+        break;   
       default:  // do nothing
     }
 
@@ -132,4 +134,15 @@ function setVideoSize(){
     $("#full-screen-video div video").css("height","auto").css("max-height","auto").css("width","auto").css("max-width","auto");
     console.log("video set");  
   }, 500);
+}
+
+function toggleWhiteBoard(){
+  if($('#toggleWhiteBoard').hasClass("open")){
+    $('#toggleWhiteBoard').removeClass("open");
+    $('#whiteBoardContainer').css("display","none");
+    return;
+  }
+  $('#whiteBoardContainer').css("display","block");
+  $('#toggleWhiteBoard').addClass("open");
+  
 }
