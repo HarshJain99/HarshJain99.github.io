@@ -1,7 +1,9 @@
 var myCanvas = document.getElementById("whiteBoard");
 var ctx = document.getElementById("whiteBoard").getContext("2d");
-var draw, allowdrawFree = false, allowdrawRectangle = false;
+var draw, allowdrawFree = false, allowdrawRectangle = false, allowdrawCircle = false;
 var isDown = false;
+var lineWidth = 1;
+var lineColor = "black";
 
 window.onload = function() {
 
@@ -23,21 +25,37 @@ window.onload = function() {
     if(myCanvas){
         var isDown = false;
         var canvasX, canvasY;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = lineWidth;
         
         defaultDrawingBehavior();
     }
 	
-    // defaultTouchDrawingBehaviour();
-	// Touch Events
-	myCanvas.addEventListener('touchstart', draw.start, false);
-	myCanvas.addEventListener('touchend', draw.end, false);
-	myCanvas.addEventListener('touchmove', draw.move, false);
-	
 	// Disable Page Move
 	document.body.addEventListener('touchmove',function(evt){
 		evt.preventDefault();
-	},false);
+    },false);
+    
+    // keyboard listeners 
+    $(document).keypress(function(e) {
+        switch (e.key) {
+            case "r":
+                drawRectangle();
+                break;
+            case "c":
+                drawCircle();
+                break;
+            case "+":
+                lineWidth = Math.min(10, lineWidth + 1);
+                $('#lineWidth').html("Line Width: " + lineWidth);
+                break;
+            case "-":
+                lineWidth = Math.max(1, lineWidth - 1);
+                $('#lineWidth').html("Line Width: " + lineWidth);
+                break;
+            default:  // do nothing
+        };
+    });
+
 }
 
 function defaultDrawingBehavior(){
@@ -53,10 +71,11 @@ function defaultDrawingBehavior(){
     }).mousemove(function(e){
         if(allowdrawFree){
             if(isDown !== false) {
+                ctx.lineWidth = lineWidth;
                 canvasX = e.pageX - myCanvas.offsetLeft;
                 canvasY = e.pageY - myCanvas.offsetTop;
                 ctx.lineTo(canvasX, canvasY);
-                ctx.strokeStyle = "#000";
+                ctx.strokeStyle = lineColor;
                 ctx.stroke();
             }
         }
@@ -83,40 +102,7 @@ function drawRectangle(){
     allowdrawFree = false;
     allowdrawRectangle = true;
     $('#drawRectangle').addClass("drawingRectangle")
-    // //Variables
-    // var canvasx = $(myCanvas).offset().left;
-    // var canvasy = $(myCanvas).offset().top;
-    // var last_mousex = last_mousey = 0;
-    // var mousex = mousey = 0;
-    // var mousedown = false;
 
-    // //Mousedown
-    // $(myCanvas).on('mousedown', function(e) {
-    //     last_mousex = parseInt(e.clientX-canvasx);
-    //     last_mousey = parseInt(e.clientY-canvasy);
-    //     mousedown = true;
-    // });
-
-    // //Mouseup
-    // $(myCanvas).on('mouseup', function(e) {
-    //     mousedown = false;
-    // });
-
-    // //Mousemove
-    // $(myCanvas).on('mousemove', function(e) {
-    //     mousex = parseInt(e.clientX-canvasx);
-    //     mousey = parseInt(e.clientY-canvasy);
-    //     if(mousedown) {
-    //         ctx.clearRect(0,0,myCanvas.width,myCanvas.height); //clear canvas
-    //         ctx.beginPath();
-    //         var width = mousex-last_mousex;
-    //         var height = mousey-last_mousey;
-    //         ctx.rect(last_mousex,last_mousey,width,height);
-    //         ctx.strokeStyle = 'black';
-    //         ctx.lineWidth = 10;
-    //         ctx.stroke();
-    //     }
-    // });
     var mouse = {
         x: 0,
         y: 0,
@@ -139,6 +125,8 @@ function drawRectangle(){
         if(allowdrawRectangle){
             setMousePosition(e);
             if (element !== null) {
+                element.style.border = lineWidth + 'px solid ' + lineColor;
+                element.style.width = parseInt(Math.abs(mouse.x - mouse.startX) - 5)+ 'px';
                 element.style.width = parseInt(Math.abs(mouse.x - mouse.startX) - 5)+ 'px';
                 element.style.height = parseInt(Math.abs(mouse.y - mouse.startY) - 5) + 'px';
                 element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
@@ -164,10 +152,80 @@ function drawRectangle(){
             }
         }
     });
-    console.log("clicked end");
+}
+
+function drawCircle(){
+    if($('#drawCircle').hasClass("drawingCircle")){
+        if(element != null || element != undefined){
+            console.log("element not ended", element);
+            return;
+        } 
+        defaultDrawingBehavior();
+        allowdrawCircle = false;
+        allowdrawFree = true;
+        $('#drawCircle').removeClass("drawingCircle");
+        return;
+    }
+    allowdrawFree = false;
+    allowdrawCircle = true;
+    $('#drawCircle').addClass("drawingCircle")
+
+    var mouse = {
+        x: 0,
+        y: 0,
+        startX: 0,
+        startY: 0
+    };
+    function setMousePosition(e) {
+        var ev = e || window.event; //Moz || IE
+        if (ev.pageX) { //Moz
+            mouse.x = ev.pageX + window.pageXOffset;
+            mouse.y = ev.pageY + window.pageYOffset;
+        } else if (ev.clientX) { //IE
+            mouse.x = ev.clientX + document.body.scrollLeft;
+            mouse.y = ev.clientY + document.body.scrollTop;
+        }
+    };
+
+    var element = null;    
+    $(myCanvas).on('mousemove', function (e) {
+        if(allowdrawCircle){
+            setMousePosition(e);
+            if (element !== null) {
+                element.style.borderRadius = '50%';
+                element.style.border = lineWidth + 'px solid ' + lineColor;
+                element.style.width = parseInt(Math.abs(mouse.x - mouse.startX) - 5)+ 'px';
+                element.style.height = parseInt(Math.abs(mouse.y - mouse.startY) - 5) + 'px';
+                element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
+                element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
+            }
+        }
+    });
+
+    $(myCanvas).on('click', function (e) {
+        if(allowdrawCircle){
+            if (element !== null) {
+                element = null;
+                myCanvas.style.cursor = "default";
+            } else {
+                mouse.startX = mouse.x;
+                mouse.startY = mouse.y;
+                element = document.createElement('div');
+                element.className = 'circle shapeInCanvas'
+                element.style.left = mouse.x + 'px';
+                element.style.top = mouse.y + 'px';
+                $('#whiteBoardContainer').append(element);
+                myCanvas.style.cursor = "crosshair";
+            }
+        }
+    });
 }
 
 function clearWhiteBoard(){
     $('.shapeInCanvas').remove();
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+}
+
+function onColorChange(){
+    lineColor = $('#lineColor').val();
 }

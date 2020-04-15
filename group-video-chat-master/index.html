@@ -77,9 +77,14 @@
 
 		<div id="whiteBoardContainer">
 			<div id="whiteBoardControls">
-				<button id="drawRectangle" onclick="drawRectangle()">Rectangle</button>
 				<button id="clearWhiteBoard" onclick="clearWhiteBoard()">Clear</button>
-				<button id="closeWhiteBoard" onclick="toggleWhiteBoard()">Close Board</button>
+				<button id="closeWhiteBoard" onclick="toggleWhiteBoard()">X</button>
+				<div id="lineWidth">Line Width: 1</div>
+				<div id="colorPickerContainer">Color: <input type="color" name="ColorPicker" id="lineColor" onchange="onColorChange()"></div>
+			</div>
+			<div id="whiteBoardControls2">
+				<button id="drawRectangle" onclick="drawRectangle()">Rectangle</button>
+				<button id="drawCircle" onclick="drawCircle()">Circle</button>
 			</div>
 			<canvas id="whiteBoard">
 				Sorry, your browser does not support HTML5 canvas technology.
