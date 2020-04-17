@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    padding: 1vw;
+    overflow: hidden; 
+}
+
+label{
+    margin-bottom: 1vw;
+    display: flex;
+    align-items: center;
+}
+
+label span{
+    width: 20vw;
+    display: block;
+}
+
+label input{
+    width: 30vw;
+    padding: 5px;
+    margin: 0.5vw 0 0 0vw;
+}
+
+button{
+    padding: 1vw 2vw 1vw 2vw;
+}
