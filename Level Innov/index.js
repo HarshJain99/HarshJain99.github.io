@@ -9,7 +9,6 @@ function createRoom(){
 
     query = 'name=' + name + '&meetingID' + name + '&attendeePW=' + password + '&moderatorPW=' + password;
     console.log(query);
-    return;
 
     getShaOf = 'create' + query + secretKey;
     url = 'http://159.65.149.158/bigbluebutton/api/create?' + query + '&checksum=' + sha1(getShaOf);
